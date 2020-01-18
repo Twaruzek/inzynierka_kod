@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+{% block head %}
+<title>Seeeee</title>
+{% endblock %}
+
+{% block body %}
+<br>
+<h1>Nie wiem co tutaj</h1>
+<br>
+<main role="main">
+    <div class="jumbotron">
+        <div class="col-sm-8 mx-auto">
+            <h1>Welcome</h1>
+            <p>Welcome sadasdasdasdasdasdasder Blog! Here we'll be talking about everything computer science. Basics, framesworkds, machine learning, other data science stuff, any new tech or findings, and pretty much anything computer science related.</p>
+            <p>Go vidsdsdsdt our website <a href="https://www.cleverprogrammer.com">cleverprogrammer.com</a> to check out more cool stuff beyond just blogs.</p>
+            <p>
+                <a class="btn btn-primary" href="/posts" role="button">Go To Posts &raquo;</a>
+            </p>
+        </div>
+    </div>
+    		<div class="row">
+			{{ colorpicker.loader() }}
+        {{ colorpicker.picker(ids=['.inp', '.inpa']) }}
+                <form>
+            <input class='inp' value='rgba(0,0,0,1)' />
+            <input class='inpa' value='rgba(0,255,0,1)' />
+        </form>
+   </div>
+</main>
+{% endblock %}
