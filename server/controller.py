@@ -6,8 +6,8 @@ from temperature import *
 
 heating.start(0)
 
-pid_h=PID(4.39,1/590,1/147.5, Integrator_max=100, Integrator_min=0)
-pid_h.setPoint(50)
+pid_h=PID(7,1/590,1/147.5, Integrator_max=100, Integrator_min=0)
+pid_h.setPoint(28)
 
 
 

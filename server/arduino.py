@@ -13,8 +13,12 @@ d=[7,7,7,7,7,6,6,6,6,6,5,5,5,5,5,4,4,4,4,4,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2.5,2.5
 
 def comunication(value,working):
     try:
+        if value<0:
+            value=99
         delay=d[value]
         value=v[value].encode('UTF-8')
+        print("na arduino")
+        print(value)
         if working == 0:
             print("po if")
             working =1
