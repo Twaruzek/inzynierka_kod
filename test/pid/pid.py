@@ -88,3 +88,9 @@ class PID:
 
 	def getDerivator(self):
 		return self.Derivator
+	    
+	    
+pid_h=PID(4.39,1/590,1/147.5, Integrator_max=100, Integrator_min=0)
+pid_h.setPoint(40)
+pid_c=PID(4.39,1/590,1/147.5, Integrator_max=100, Integrator_min=0)
+pid_c.setPoint(20)

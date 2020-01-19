@@ -19,29 +19,6 @@ GPIO.setup(5, GPIO.OUT)
 GPIO.output(5, GPIO.LOW)    
 GPIO.setup(15, GPIO.OUT)
 GPIO.output(15, GPIO.HIGH)
-def my_callback(channel): # if port 25 == 1
-        dim=fan.dutyCycle
-        if dim > 70:
-            dt = 75*dim
-            start=1000000*time.time()
-            stop=0
-            while (stop-start)<dt:
-                stop=1000000*time.time()
-              
-            GPIO.output(15, GPIO.HIGH)
-            start2=1000000*time.time()
-            stop2=0
-            while (stop2-start2)<13:
-                stop2=1000000*time.time()
-            GPIO.output(15, GPIO.LOW)
-            start=0
-            start2=0
-            stop2=0
-            stop=0
-        else:
-            GPIO.output(15, GPIO.LOW)
- 
-GPIO.add_event_detect(14, GPIO.RISING, callback=my_callback) 
 
 try:
  while True:

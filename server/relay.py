@@ -20,7 +20,6 @@ class relay:
     def __init__(self):
         for channel in self.relay:
             GPIO.setup(self.relay[channel]['pin'], GPIO.OUT)
-            GPIO.output(self.relay[channel]['pin'], GPIO.HIGH)
             
     def set_state(self,CH,state):
         if state==1:
@@ -37,6 +36,8 @@ class relay:
             return 1
         
 relay_o=relay()
+        
+
 
         
 

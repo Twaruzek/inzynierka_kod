@@ -24,8 +24,7 @@ def read_temp():
             return temp_c
     except:
         return(99)
-    
-print(read_temp())
+
     
 
 

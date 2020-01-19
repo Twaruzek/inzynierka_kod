@@ -66,11 +66,13 @@ class room():
     def __del__(self):
         self.turn_off()
         
-rgb1=[0,0,0]  
-kitchen = room(rooms['kitchen'], rgb1,0)
-bathroom = room(rooms['bathroom'],rgb1,0)
-hall = room(rooms['hall'],rgb1,0)
-living_room = room(rooms['living_room'],rgb1,0)
+rgb1=[255,0,0]  
+kitchen = room(rooms['kitchen'], rgb1,1)
+bathroom = room(rooms['bathroom'],rgb1,1)
+hall = room(rooms['hall'],rgb1,1)
+living_room = room(rooms['living_room'],rgb1,1)
+
+
 
 
 

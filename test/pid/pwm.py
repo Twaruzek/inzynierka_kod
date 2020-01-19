@@ -8,20 +8,12 @@ import math
 GPIO.setmode(GPIO.BCM)
 
 
-def temp():
-    sensor = w1thermsensor.W1ThermSensor()
-    temp = sensor.get_temperature()
-    if temp is not None:
-        temp = round(temp, 1)
-    return temp
-
 
 class pwm(threading.Thread):
 
     def __init__(
         self,
         frequency,
-        gpioPin,
         P,
         break_point,
         hysteresis,
@@ -42,7 +34,6 @@ class pwm(threading.Thread):
         self.baseTime = 1.0 / frequency
         self.maxCycle = 100.0
         self.sliceTime = self.baseTime / self.maxCycle
-        self.gpioPin = gpioPin
         self.terminated = False
         self.toTerminate = False
 
@@ -58,7 +49,6 @@ class pwm(threading.Thread):
     """
 
         self.dutyCycle = dutyCycle
-        GPIO.setup(self.gpioPin, GPIO.OUT)
         self.thread = threading.Thread(None, self.run, None, (), {})
         self.thread.start()
 
@@ -69,11 +59,9 @@ class pwm(threading.Thread):
 
         while self.toTerminate == False:
             if self.dutyCycle > 0:
-                GPIO.output(self.gpioPin, GPIO.HIGH)
                 time.sleep(self.dutyCycle * self.sliceTime)
 
             if self.dutyCycle < self.maxCycle:
-                GPIO.output(self.gpioPin, GPIO.LOW)
                 time.sleep((self.maxCycle - self.dutyCycle)
                            * self.sliceTime)
 
@@ -88,7 +76,7 @@ class pwm(threading.Thread):
             if self.device == 'heat':
                 if pid_out > 0:
                     return 0
-                a = (100 - 70) / (self.break_point - self.hysteresis)
+                a = 100  / (self.break_point - self.hysteresis)
                 b = 100 - self.break_point * a
                 out = -a * pid_out + b
             elif self.device == 'cool':
@@ -122,6 +110,19 @@ class pwm(threading.Thread):
 
         self.baseTime = 1.0 / frequency
         self.sliceTime = self.baseTime / self.maxCycle
+        
+        
+    def changeBreakPoint(self, break_point):
+        if break_point>2*self.hysteresis:
+            self.break_point=break_point
+        else:
+            self.break_point=2*self.hysteresis
+        
+    def changeHysteresis(self, hysteresis):
+        if 2*hysteresis<self.break_point:
+            self.hysteresis=hysteresis
+        else:
+            self.hysteresis=self.break_point/2
 
     def stop(self):
         """
