@@ -4,6 +4,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+        
 
 
 
@@ -215,10 +216,65 @@
 
 			</div>
 			</div>
-			
+		<hr class="col-xs-12">
+		<p class="display-4 d-inline">Sterowanie temperaturą</p>
+		<hr class="col-xs-12">
+		
+		<div class="row justify-content-center">
+			<div class="col-sm-12 col-lg-6 border rounded">
+				
+				<p class="h4 d-inline">Chłodzenie</p>
+				
+				<div class="float-right">
+					{% if temperature[1]==1 %}
+						<a href="/control/temperature/cooling/0" class="btn btn-dark onof" role="button">Wyłącz</a> 
+					{% else %}
+						<a href="/control/temperature/cooling/1" class="btn btn-dark active onof" role="button">Włącz</a> 
+					{% endif %}
+				</div>
+				<div class="row">
+				<p class=" h6 d-inline">Temperatura zadana = {{ temperature[3] }}</p>
+				</div>
+				<div class=" row justify-content-center float-center">
+				<div class="form-group">
+				    <form method="post" action="{{url_for('control.panel') }}">
+					<input class='cooling' name='cooling' type="number" step="0.1" min="16" max="22" placeholder="°C">
+					<input class="btn btn-primary btn-sm " name="cooling" type="submit" value="✓">
+					</form>
+				</div>
+				
+				</div>
+			</div>
 
-		</div>
+			<div class="col-sm-12 col-lg-6 border rounded">
+				
+				<p class="h4 d-inline">Ogrzewanie</p>
+				
+				<div class="float-right">
+					{% if temperature[0]==1 %}
+						<a href="/control/temperature/heating/0" class="btn btn-dark onof" role="button">Wyłącz</a> 
+					{% else %}
+						<a href="/control/temperature/heating/1" class="btn btn-dark active onof" role="button">Włącz</a> 
+					{% endif %}
+				</div>
+				<div class="row">
+				<p class=" h6 d-inline">Temperatura zadana = {{ temperature[2] }}</p>
+				</div>
+				<div class=" row justify-content-center float-center">
+				<div class="form-group">
+				    <form method="post" action="{{url_for('control.panel') }}">
+					<input class="heating" name='heating' type="number" step="0.1" min="20" max="60" placeholder="°C">
+					<input class="btn btn-primary btn-sm " name="heating" type="submit" value="✓">
+					</form>
+				</div>
+				
+				</div>
+				</div>
+			</div>
+{{ now_temp }}
+		</div>	
     </div>
+
 </main>
 
 {% endblock %}

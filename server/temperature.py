@@ -1,9 +1,13 @@
 import os
 import time
+import sys
 
 os.system('modprobe w1-gpio')
 os.system('modprobe w1-therm')
 sensor= '/sys/bus/w1/devices/28-011452cc30aa/w1_slave'
+
+
+
 
 def read_temp_raw():
     f = open(sensor, 'r')

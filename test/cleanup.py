@@ -23,7 +23,4 @@ GPIO.setup(19,GPIO.OUT)
 
 
 
-while True:
-    #GPIO.output(5,GPIO.LOW)
-    GPIO.cleanup()
-    
+

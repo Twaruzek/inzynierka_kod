@@ -1,90 +1,89 @@
-#The recipe gives simple implementation of a Discrete Proportional-Integral-Derivative (PID) controller. PID controller gives output value for error between desired reference input and measurement feedback to minimize error value.
-#More information: http://en.wikipedia.org/wiki/PID_controller
-#
-#cnr437@gmail.com
-#
-#######	Example	#########
-#
-#p=PID(3.0,0.4,1.2)
-#p.setPoint(5.0)
-#while True:
-#     pid = p.update(measurement_value)
-#
-#
-
 
 class PID:
-	"""
-	Discrete PID control
-	"""
+    def __init__(self, P, I, D, Derivator=0, Integrator=0, Integrator_max=500, Integrator_min=-500):
+        self.Kp=P
+        self.Ki=I
+        self.Kd=D
+        self.Derivator=Derivator
+        self.Integrator=Integrator
+        self.Integrator_max=Integrator_max
+        self.Integrator_min=Integrator_min
+        self.set_point=0.0
+        self.error=0.0
+        self.Td=P/D
+        self.Ti=P/I
 
-	def __init__(self, P=5.0, I=4.0, D=1.0, Derivator=0, Integrator=0, Integrator_max=500, Integrator_min=-500):
+    def update(self,current_value):
+            
+        self.error = self.set_point - current_value
+        self.P_value = self.Kp * self.error
+        self.D_value = self.Kd * ( self.error - self.Derivator)
+        self.Derivator = self.error
 
-		self.Kp=P
-		self.Ki=I
-		self.Kd=D
-		self.Derivator=Derivator
-		self.Integrator=Integrator
-		self.Integrator_max=Integrator_max
-		self.Integrator_min=Integrator_min
+        self.Integrator = self.Integrator + self.error
 
-		self.set_point=0.0
-		self.error=0.0
+        if self.Integrator > self.Integrator_max:
+            self.Integrator = self.Integrator_max
+        elif self.Integrator < self.Integrator_min:
+            self.Integrator = self.Integrator_min
 
-	def update(self,current_value):
-		"""
-		Calculate PID output value for given reference input and feedback
-		"""
-
-		self.error = self.set_point - current_value
-
-		self.P_value = self.Kp * self.error
-		self.D_value = self.Kd * ( self.error - self.Derivator)
-		self.Derivator = self.error
-
-		self.Integrator = self.Integrator + self.error
-
-		if self.Integrator > self.Integrator_max:
-			self.Integrator = self.Integrator_max
-		elif self.Integrator < self.Integrator_min:
-			self.Integrator = self.Integrator_min
-
-		self.I_value = self.Integrator * self.Ki
+        self.I_value = self.Integrator * self.Ki
                 
-		PID = self.P_value + self.I_value + self.D_value
-		return PID
+        PID = self.P_value + self.I_value + self.D_value
+        return PID
 
-	def setPoint(self,set_point):
-		"""
-		Initilize the setpoint of PID
-		"""
-		self.set_point = set_point
-		self.Integrator=0
-		self.Derivator=0
+    def setPoint(self,set_point):
+        self.set_point = set_point
+        self.Integrator=0
+        self.Derivator=0
+        print(set_point)
 
-	def setIntegrator(self, Integrator):
-		self.Integrator = Integrator
+    def setIntegrator(self, Integrator):
+        self.Integrator = Integrator
 
-	def setDerivator(self, Derivator):
-		self.Derivator = Derivator
+    def setDerivator(self, Derivator):
+        self.Derivator = Derivator
 
-	def setKp(self,P):
-		self.Kp=P
+    def setKp(self,P):
+        self.Kp=P
 
-	def setKi(self,I):
-		self.Ki=I
+    def setKi(self,I):
+        self.Ti=I
+        self.Ki=1/Self.Ti*Self.Kp
 
-	def setKd(self,D):
-		self.Kd=D
+    def setKd(self,D):
+        self.Td=D
+        self.Kd=1/Self.Td*Self.Kp
 
-	def getPoint(self):
-		return self.set_point
+    def getPoint(self):
+        return self.set_point
 
-	def getError(self):
-		return self.error
+    def getError(self):
+        return self.error
 
-	def getIntegrator(self):
-		return self.Integrator
+    def getIntegrator(self):
+        return self.Integrator
 
-	def getDerivator(self):
-		return self.Derivator
+    def getDerivator(self):
+        return self.Derivator
+	
+    def reset(self,CH):
+        if CH == "cooling":
+            self.Kp=10.21
+            self.Ki=10.21/254
+            self.Kd=10.21/63.5
+            self.Ti=254
+            self.Td=63.5
+        if CH == "heating":
+            self.Kp=4.37
+            self.Ki=4.37/590
+            self.Kd=4.37/147.5
+            self.Ti=590
+            self.Td=147.5
+		
+	    
+
+pid_h=PID(4.37,4.37/590,4.37/147.5, Integrator_max=100, Integrator_min=0)
+pid_h.setPoint(30)
+pid_c=PID(10.21,10.21/254,10.21/63.5, Integrator_max=100, Integrator_min=0)
+pid_c.setPoint(20)

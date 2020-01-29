@@ -1,23 +1,112 @@
 {% extends 'base.html' %}
-
 {% block head %}
-<title>Strona główna</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+        
+
+<title>Seeeee</title>
 {% endblock %}
 
 {% block body %}
-<br>
-<h1>Nie wiem co tutaj</h1>
-<br>
+
+
 <main role="main">
     <div class="jumbotron">
-        <div class="col-sm-8 mx-auto">
-            <h1>Welcome</h1>
-            <p>Welcome to the Clever Programmer Blog! Here we'll be talking about everything computer science. Basics, framesworkds, machine learning, other data science stuff, any new tech or findings, and pretty much anything computer science related.</p>
-            <p>Go visit us at our website <a href="https://www.cleverprogrammer.com">cleverprogrammer.com</a> to check out more cool stuff beyond just blogs.</p>
-            <p>
-                <a class="btn btn-primary" href="/posts" role="button">Go To Posts &raquo;</a>
-            </p>
+
+		<hr class="col-xs-12">
+            <p class="display-4 d-inline">Regulator PID</p>
+		<hr class="col-xs-12">
+		
+		<div class="row justify-content-center">
+			<div class="col-sm-12 col-lg-6 border rounded justify-content-cente">
+                <div class="row">
+				<p class="h4 d-inline">Chłodzenie</p>
+                </div>
+                <div class="float-right">
+                        <p class=" h6 ">Aktualne Kp = {{ pid_cool[0] }}</p>
+                        <div class="form-group">
+                            <form method="post" action="{{url_for('parameters.parametr') }}">
+                            <input class="CK" name='CK' type="number" step="0.1" min="0" placeholder="Kp">
+                            <input class="btn btn-primary btn-sm " name="CK" type="submit" value="✓">
+                        </form>
+                        </div>
+                                    
+                        <p class=" h6 ">Aktualne Ti = {{ pid_cool[1] }}</p>
+                        <div class="form-group">
+                            <form method="post" action="{{url_for('parameters.parametr') }}">
+                            <input class="CKi" name='CKi' type="number" step="0.1" min="0" placeholder="Ti">
+                            <input class="btn btn-primary btn-sm " name="CKi" type="submit" value="✓">
+                        </form>
+                         </div>
+
+                        <p class=" h6 ">Aktualne Td = {{ pid_cool[2] }}</p>
+                        <div class="form-group">
+                            <form method="post" action="{{url_for('parameters.parametr') }}">
+                            <input class="CKd" name='CKd' type="number" step="0.1" min="0" placeholder="Td">
+                            <input class="btn btn-primary btn-sm " name="CKd" type="submit" value="✓">
+                        </form>
+                         </div>
+
+
+                </div>
+                </div>
+
+
+                <div class="col-sm-12 col-lg-6 border rounded justify-content-cente">
+				<div class="row">
+                <p class="h4 d-inline">Ogrzewanie</p>
+                </div>
+                   <div class="float-right">     
+                        <p class=" h6 ">Aktualne Kp = {{ pid_heat[0] }}</p>
+                        <div class="form-group">
+                            <form method="post" action="{{url_for('parameters.parametr') }}">
+                            <input class="HK" name='HK' type="number" step="0.1" min="0" placeholder="Kp">
+                            <input class="btn btn-primary btn-sm " name="HK" type="submit" value="✓">
+                        </form>
+                         </div>
+                         
+                        <p class=" h6 ">Aktualne Ti = {{ pid_heat[1] }}</p>
+                        <div class="form-group">
+                            <form method="post" action="{{url_for('parameters.parametr') }}">
+                            <input class="HKi" name='HKi' type="number" step="0.1" min="0" placeholder="Ti">
+                            <input class="btn btn-primary btn-sm " name="HKi" type="submit" value="✓">
+                        </form>
+                         </div>
+
+                        <p class=" h6 ">Aktualne Td = {{ pid_heat[2] }}</p>
+                        <div class="form-group">
+                            <form method="post" action="{{url_for('parameters.parametr') }}">
+                            <input class="HKd" name='HKd' type="number" step="0.1" min="0" placeholder="Td">
+                            <input class="btn btn-primary btn-sm " name="HKd" type="submit" value="✓">
+                        </form>
+                         </div>
+
+
+                </div>
+                </div>
         </div>
+
+				
+            
+        
+
+
+            
+        <hr class="col-xs-12">
+            <p class="display-4 d-inline">Nasycenie PWM</p>
+		<hr class="col-xs-12">
+				</div>
+
+			</div>
+
+		</div>	
     </div>
+
 </main>
+
 {% endblock %}
+
+
+
