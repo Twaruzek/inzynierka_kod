@@ -109,8 +109,8 @@ def add_record():
         del record_x
         time.sleep(0.5)
 
-#rec=threading.Thread(target=add_record)
-#rec.start()
+rec=threading.Thread(target=add_record)
+rec.start()
 ##################
 ### Blueprints ###
 #################@
