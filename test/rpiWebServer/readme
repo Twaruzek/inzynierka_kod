@@ -1,6 +1,0 @@
-1) Zdalne połączenie się z RaspberryPI za pomocą programu VNC Viewer (adres IP naszego RaspberryPI: 192.168.0.22)
-2) Wejście do folderu 
-	cd rpiwebserver 
-3) Uruchomienie skryptu
-	sudo python3 app.py
-4) Sprawdzenie wyników pracy poprzez wpisanie adresu IP naszego RaspberryPI do przeglądarki
