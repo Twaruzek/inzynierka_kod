@@ -36,7 +36,6 @@ class PID:
         self.set_point = set_point
         self.Integrator=0
         self.Derivator=0
-        print(set_point)
 
     def setIntegrator(self, Integrator):
         self.Integrator = Integrator
@@ -49,11 +48,11 @@ class PID:
 
     def setKi(self,I):
         self.Ti=I
-        self.Ki=1/Self.Ti*Self.Kp
+        self.Ki=(1/(self.Ti))*self.Kp
 
     def setKd(self,D):
         self.Td=D
-        self.Kd=1/Self.Td*Self.Kp
+        self.Kd=(1/(self.Td))*self.Kp
 
     def getPoint(self):
         return self.set_point
@@ -84,6 +83,6 @@ class PID:
 	    
 
 pid_h=PID(4.37,4.37/590,4.37/147.5, Integrator_max=100, Integrator_min=0)
-pid_h.setPoint(30)
+pid_h.setPoint(30.0)
 pid_c=PID(10.21,10.21/254,10.21/63.5, Integrator_max=100, Integrator_min=0)
-pid_c.setPoint(20)
+pid_c.setPoint(20.0)

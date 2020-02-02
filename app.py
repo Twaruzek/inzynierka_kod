@@ -1,15 +1,8 @@
 from flask import Flask, render_template, request, redirect
-
-from sqlalchemy import create_engine
-from sqlalchemy import MetaData
-from sqlalchemy import Table
-from sqlalchemy import Column
-from sqlalchemy import Float
-from sqlalchemy import DateTime
-
-
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import Column, Integer, String
 from relay import relay
-from views import main,control,project,parameters
+from views import *
 import temperature
 from relay import relay_o
 from flask_colorpicker import colorpicker
@@ -18,9 +11,6 @@ from os import getcwd, name
 import threading
 import datetime
 import serial
-import time
-
-
 
 #######################
 ### PID, controller ###
@@ -29,7 +19,6 @@ import time
 from pwm import cooling, heating 
 from pid import pid_h, pid_c
 from controller import controller_h, controller_c
-from fan_c import fan_c
 
 
 
@@ -52,6 +41,7 @@ def to_arduino():
                     value=99
                 delay=d[value]
                 value=v[value].encode('UTF-8')
+                print("Value send to arduino = "+str(value))
                 if working == 0:
                     working =1
                     serial.close()
@@ -76,10 +66,10 @@ def to_controller():
         if controller_c.state==1:
             try:
                 controller_c.update()
+                print("NO CHŁODZE            "+ str(controller_c.dim))
                 relay_o.set_pwm("ena",controller_c.dim)
             except:
                 pass
-
                 
 eng_controller=threading.Thread(target=to_controller)
 eng_controller.start()
@@ -100,44 +90,41 @@ app = Flask(__name__)
 ################
 ### Database ###
 ################
-db_uri = 'sqlite:///db.db'
 
-engine = create_engine(db_uri)
-meta = MetaData(engine)
-table = Table('temperature_all', meta,Column('time', DateTime, primary_key=True),Column('temperature', Float))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.db'
+app.config['SECRET_KEY']='nQ{j65rLbt|3#*~fEmwRQ&5HbHNXHK'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
- 
+class temperature_all(db.Model):
+    time = db.Column(db.String, primary_key=True)
+    temperature = db.Column(db.Float)
+    
 def add_record():
+
     while True:
-        try:
-            ins = table.insert().values(time=datetime.datetime.now(),temperature=temperature.read_temp())
-            conn = engine.connect()
-            conn.execute(ins)
-            conn.close()
-            time.sleep(0.5)
-        except:
-            pass 
+        record_x = temperature_all(time= datetime.datetime.now(),temperature=temperature.read_temp())
+        db.session.add(record_x)
+        db.session.commit()
+        del record_x
+        time.sleep(0.5)
 
-
-rec=threading.Thread(target=add_record)
-rec.start()
-
-
+#rec=threading.Thread(target=add_record)
+#rec.start()
 ##################
 ### Blueprints ###
 #################@
 
 app.register_blueprint(main)
 app.register_blueprint(control, url_prefix="/control")
+app.register_blueprint(anakysis, url_prefix="/anakysis")
 app.register_blueprint(project, url_prefix="/project")
 app.register_blueprint(parameters, url_prefix="/parameters")
+app.register_blueprint(database, url_prefix="/database")
 
 
 
-###################
-### Colorpicker ###
-###################
-
+GPIO.setwarnings(False)
 colorpicker(app, local=['static/spectrum.js', 'static/spectrum.css'])
 
 

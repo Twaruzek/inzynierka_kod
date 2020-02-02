@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>Przekaźniki</title>
+  </head>
+  <body>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 rounded border bg-secondary">
+      <h1 class="text-center">Sterowanie przekaźnikami</h1>
+        <div class="row justify-content-center">
+          {% if st[3]==1 %}
+						<a  href="/3/off" class="btn btn-dark onof" role="button">Wyłącz</a> 
+					{% else %}
+						<a href="/3/on" class="btn btn-dark active onof" role="button">Włącz</a> 
+					{% endif %}
+        </div>
+        <div class="row justify-content-center">
+          <div class="col-md-4 rounded border bg-secondary">
+              <p class=" h6 ">R = {{ rgbx[0] }}</p>
+                  <div class="form-group">
+                    <form method="post" action="{{url_for('index') }}">
+                      <input class="R" name='R' type="number" step="1" min="0" max="255" placeholder="R">
+                      <input class="btn btn-primary btn-sm " name="R" type="submit" value="✓">
+                    </form>
+                  </div>
+            </div>
+          <div class="col-md-4 rounded border bg-secondary">
+              <p class=" h6 ">R = {{ rgbx[1] }}</p>
+                  <div class="form-group">
+                    <form method="post" action="{{url_for('index') }}">
+                      <input class="R" name='G' type="number" step="1" min="0" max="255" placeholder="G">
+                      <input class="btn btn-primary btn-sm " name="G" type="submit" value="✓">
+                    </form>
+                  </div>
+            </div>
+          <div class="col-md-4 rounded border bg-secondary">
+              <p class=" h6 ">R = {{ rgbx[2] }}</p>
+                  <div class="form-group">
+                    <form method="post" action="{{url_for('index') }}">
+                      <input class="R" name='B' type="number" step="1" min="0" max="255" placeholder="B">
+                      <input class="btn btn-primary btn-sm " name="B" type="submit" value="✓">
+                    </form>
+                  </div>
+            </div>
+        </div>
+    </div>
+  </div>
+</div
+  </body>
+</html>

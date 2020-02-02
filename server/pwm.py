@@ -35,7 +35,6 @@ class pwm(threading.Thread):
         self.terminated = True
 
     def calculateDutyCycle(self, pid_out): 
-        print("OUT PID = ="+str(pid_out))
         if (pid_out > self.break_point and self.device == 'heat'):
             out = 99
         elif (-pid_out >self.break_point and self.device == 'cool'):
@@ -84,7 +83,16 @@ class pwm(threading.Thread):
             self.hysteresis=self.break_point/2
             
     def changeKp(self,P):
+        
         self.Kp=P
+        
+    def reset(self,device):
+        if device == "cooling":   
+            self.break_point = 0.8
+            self.hysteresis = 0.1
+        if device == "heating":    
+            self.break_point = 2
+            self.hysteresis = 0.1
 
     def stop(self):
 
@@ -97,7 +105,3 @@ cooling=pwm(60,0.8,0.1,"cool")
 heating=pwm(60,2,0.1,"heat")
 
 
-# cooling=pwm(60,1,0.8,0.1,"cool")
-# heating=pwm(60,4.37,2,0.1,"heat")
-# motor = pwm(100,8)
-# motor.start(100)

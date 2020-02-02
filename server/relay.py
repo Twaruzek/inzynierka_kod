@@ -23,15 +23,11 @@ class relay:
        }
     GPIO.setup(15,GPIO.OUT)
     GPIO.setup(8,GPIO.OUT)
-    GPIO.setup(18,GPIO.OUT)
+
     ena = GPIO.PWM(15,1000)
-    enb = GPIO.PWM(8,10)
-    ledpwm = GPIO.PWM(18,1000)
+    enb = GPIO.PWM(8,100)
+    enb.start(0)
 
-    ledpwm.start(0)
-
-
-    
     def __init__(self):
         for channel in self.relay:
             GPIO.setup(self.relay[channel]['pin'], GPIO.OUT)
@@ -53,16 +49,14 @@ class relay:
     
     def set_pwm(self,CH,PWM):
         if CH == "ena":
-            print("PWM = "+str(PWM))
             self.ena.stop()
-            self.ena.start(int(PWM))
-
-            
-            
+            self.ena.start(int(PWM))  
         if CH == "enb":
-            self.enb.ChangeDutyCycle(PWM)
-        if CH == "ledpwm":
-            self.ledpwm.ChangeDutyCycle(PWM)
+            self.enb.stop()
+            self.enb.start(int(PWM)) 
+            
+            
+
             
             
 relay_o=relay()

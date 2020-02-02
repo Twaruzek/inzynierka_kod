@@ -6,7 +6,7 @@
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
         
 
-<title>Seeeee</title>
+<title>Parametry</title>
 {% endblock %}
 
 {% block body %}
@@ -49,6 +49,7 @@
                         </form>
                          </div>
 
+                            	<a href="/parameters/reset/pid_c" class="btn btn-lg btn-dark" role="button">Domyślne</a>
 
                 </div>
                 </div>
@@ -82,7 +83,7 @@
                             <input class="btn btn-primary btn-sm " name="HKd" type="submit" value="✓">
                         </form>
                          </div>
-
+                    <a href="/parameters/reset/pid_h" class="btn btn-lg btn-dark" role="button">Domyślne</a>
 
                 </div>
                 </div>
@@ -90,19 +91,65 @@
 
 				
             
-        
+    <hr class="col-xs-12">
+            <p class="display-4 d-inline">Nasycenie PWM</p>
+		<hr class="col-xs-12">
+		
+		<div class="row justify-content-center">
+			<div class="col-sm-12 col-lg-6 border rounded justify-content-cente">
+                <div class="row">
+				<p class="h4 d-inline">Chłodzenie</p>
+                </div>
+                <div class="float-right">
+                        <p class=" h6 ">Aktualny unkt nasycenia = {{ pid_cool[3] }}</p>
+                        <div class="form-group">
+                            <form method="post" action="{{url_for('parameters.parametr') }}">
+                            <input class="CBP" name='CBP' type="number" step="0.01" min="0" placeholder="Punkt nasycenia">
+                            <input class="btn btn-primary btn-sm " name="CBP" type="submit" value="✓">
+                        </form>
+                        </div>
+                                    
+                        <p class=" h6 ">Aktualna histereza = {{ pid_cool[4] }}</p>
+                        <div class="form-group">
+                            <form method="post" action="{{url_for('parameters.parametr') }}">
+                            <input class="CHis" name='CHis' type="number" step="0.01" min="0" placeholder="Histereza">
+                            <input class="btn btn-primary btn-sm " name="CHis" type="submit" value="✓">
+                        </form>
+                         </div>
+                            	<a href="/parameters/reset/sat_c" class="btn btn-lg btn-dark" role="button">Domyślne</a>
+
+                </div>
+                </div>
+                
+                <div class="col-sm-12 col-lg-6 border rounded justify-content-cente">
+                <div class="row">
+				<p class="h4 d-inline">Ogrzewanie</p>
+                </div>
+                <div class="float-right">
+                        <p class=" h6 ">Aktualny punkt nasycenia = {{ pid_heat[3] }}</p>
+                        <div class="form-group">
+                            <form method="post" action="{{url_for('parameters.parametr') }}">
+                            <input class="HBP" name='HBP' type="number" step="0.01" min="0" placeholder="Punkt nasycenia">
+                            <input class="btn btn-primary btn-sm " name="HBP" type="submit" value="✓">
+                        </form>
+                        </div>
+                                    
+                        <p class=" h6 ">Aktualna histereza = {{ pid_heat[4] }}</p>
+                        <div class="form-group">
+                            <form method="post" action="{{url_for('parameters.parametr') }}">
+                            <input class="HHis" name='HHis' type="number" step="0.01" min="0" placeholder="Histereza">
+                            <input class="btn btn-primary btn-sm " name="HHis" type="submit" value="✓">
+                        </form>
+                         </div>
+                            	<a href="/parameters/reset/sat_h" class="btn btn-lg btn-dark" role="button">Domyślne</a>
+
+                </div>
+                </div>
+                </div>    
 
 
             
-        <hr class="col-xs-12">
-            <p class="display-4 d-inline">Nasycenie PWM</p>
-		<hr class="col-xs-12">
-				</div>
 
-			</div>
-
-		</div>	
-    </div>
 
 </main>
 

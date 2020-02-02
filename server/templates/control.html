@@ -10,7 +10,7 @@
 
         {{ colorpicker.loader() }}
         {{ colorpicker.picker(ids=['.kitchen', '.hall', '.living_room', '.bathroom']) }}
-<title>Seeeee</title>
+<title>Panel sterowania</title>
 {% endblock %}
 
 {% block body %}
@@ -18,7 +18,6 @@
 
 <main role="main">
     <div class="jumbotron">
-		
 		<p class="display-4 d-inline">Oświetlenie</p>
 		<div class="float-right">
 
@@ -217,7 +216,10 @@
 			</div>
 			</div>
 		<hr class="col-xs-12">
-		<p class="display-4 d-inline">Sterowanie temperaturą</p>
+		<p class="display-4 d-inline">Temperatura</p>
+				<div class="float-right">
+					<p class=" h3 d-inline">{{ now_temp }}°C</p>
+				</div>
 		<hr class="col-xs-12">
 		
 		<div class="row justify-content-center">
@@ -271,8 +273,32 @@
 				</div>
 				</div>
 			</div>
-{{ now_temp }}
-		</div>	
+				<hr class="col-xs-12">
+				
+					<p class="display-4 d-inline">Wentylator </p>
+				<div class="float-right">
+					<p class=" h3 d-inline">{{ fan[1] }}%</p>
+					{% if fan[0]==1 %}
+						<a  href="/control/temperature/fan/0" class="btn btn-lg btn-dark bigonof" role="button">Wyłącz</a> 
+					{% else %}
+						<a href="/control/temperature/fan/1" class="btn btn-lg btn-dark active bigonof" role="button">Włącz</a> 
+					{% endif %}
+				</div>
+				
+				<hr class="col-xs-12">
+					<div class="form-group">
+				    <form method="post" action="{{url_for('control.panel') }}">
+					<input class='form-control-range' name='fan' type="range" step="1" min="0" max="100">
+					
+					<div class ="float-right">
+					<input class="btn btn-primary btn-sm " name="fan" type="submit" value="✓">
+					</div>
+					</form>
+					
+				</div>
+				
+				
+	</div>
     </div>
 
 </main>
